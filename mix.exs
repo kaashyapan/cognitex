@@ -30,7 +30,7 @@ defmodule Cognitex.MixProject do
       files: ["lib", "mix.exs", "README*", "LICENSE*"],
       maintainers: ["Adam Skołuda"],
       licenses: ["MIT"],
-      links: %{"GitHub" => "https://github.com/Skoda091/cognitex"}
+      links: %{"GitHub" => "https://github.com/kaashyapan/cognitex"}
     ]
   end
 
