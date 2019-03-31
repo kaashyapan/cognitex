@@ -323,6 +323,21 @@ defmodule Cognitex do
     end
   end
 
+  @spec refresh_auth(String.t()) :: {:ok, map()} | {:error, map()}
+  def refresh_auth(refresh_token) do
+    input =
+      %{}
+      |> inject_client_id()
+      |> inject_user_pool_id()
+      |> inject_refresh_auth_flow()
+      |> inject_refresh_auth_parameters(refresh_token)
+
+    case cognito().admin_initiate_auth(input) do
+      {:ok, request_data, _} -> {:ok, request_data}
+      {:error, {status, message}} -> {:error, %{status: status, message: message}}
+    end
+  end
+
   defp inject_params(map, params) do
     {_, updated_map} =
       Enum.map_reduce(params, map, fn {key, value}, map ->
@@ -355,8 +370,16 @@ defmodule Cognitex do
     Map.put(map, :AuthFlow, "ADMIN_NO_SRP_AUTH")
   end
 
+  defp inject_refresh_auth_flow(map) do
+    Map.put(map, :AuthFlow, "REFRESH_TOKEN_AUTH")
+  end
+
   defp inject_auth_parameters(map, email, password) do
     Map.put(map, :AuthParameters, %{USERNAME: email, PASSWORD: password})
+  end
+
+  defp inject_refresh_auth_parameters(map, refresh_token) do
+    Map.put(map, :AuthParameters, %{REFRESH_TOKEN: refresh_token})
   end
 
   defp atom_camelize(atom) do
