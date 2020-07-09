@@ -11,6 +11,7 @@ defmodule Services.Cognito do
   @callback update_user_attributes(map()) ::
               {:ok, map(), any()} | {:error, {String.t(), String.t()}}
   @callback forgot_password(map()) :: {:ok, map(), any()} | {:error, {String.t(), String.t()}}
+  @callback resend_confirmation_code(map()) :: {:ok, map(), any()} | {:error, {String.t(), String.t()}}
   @callback refresh_auth(map()) :: {:ok, map(), any()} | {:error, {String.t(), String.t()}}
   @callback confirm_forgot_password(map()) ::
               {:ok, map(), any()} | {:error, {String.t(), String.t()}}

@@ -38,6 +38,13 @@ defmodule Services.CognitoWrapper do
     IdentityProvider.admin_initiate_auth(client(), input)
   end
 
+    @doc """
+  Initiates the authentication flow, as an administrator. Requires developer credentials.
+  """
+  @impl true
+  def resend_verification(input \\ %{}) do
+    IdentityProvider.resend_confirmation_code(client(), input)
+  end
   @doc """
   Gets the user attributes and metadata for a user.
   """

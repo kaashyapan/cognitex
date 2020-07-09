@@ -293,6 +293,19 @@ defmodule Cognitex do
     end
   end
 
+  @spec resend_confirmation_code(String.t()) :: {:ok, map()} | {:error, map()}
+  def resend_confirmation_code(username) do
+    input =
+      %{}
+      |> inject_client_id()
+      |> inject_params(username: username)
+
+    case cognito().resend_confirmation_code(input) do
+      {:ok, request_data, _} -> {:ok, request_data}
+      {:error, {status, message}} -> {:error, %{status: status, message: message}}
+    end
+  end
+
   @doc """
   Allows a user to enter a confirmation code to reset a forgotten password.
 
