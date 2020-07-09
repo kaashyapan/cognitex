@@ -42,7 +42,7 @@ defmodule Services.CognitoWrapper do
   Initiates the authentication flow, as an administrator. Requires developer credentials.
   """
   @impl true
-  def resend_verification(input \\ %{}) do
+  def resend_confirmation_code(input \\ %{}) do
     IdentityProvider.resend_confirmation_code(client(), input)
   end
   @doc """
